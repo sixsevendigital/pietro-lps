@@ -10,7 +10,6 @@ import "./styles/sections.css";
 
 import { checkoutUrl } from "./config.ts";
 import { initHeroBackground } from "./hero-background.ts";
-import { initVslReveal, revealPageContent } from "./vsl-reveal.ts";
 
 function bindCheckoutLinks(): void {
   const links = document.querySelectorAll<HTMLAnchorElement>("[data-checkout]");
@@ -19,29 +18,8 @@ function bindCheckoutLinks(): void {
   }
 }
 
-function isMobileViewport(): boolean {
-  return window.matchMedia("(max-width: 640px)").matches;
-}
-
-function isGatedHidden(node: HTMLElement): boolean {
-  if (document.body.classList.contains("is-content-revealed")) return false;
-  if (node.closest(".is-gated")) return true;
-  return isMobileViewport() && Boolean(node.closest(".is-mobile-gated"));
-}
-
-function markFadeInsVisible(scope?: ParentNode): void {
-  if (!scope) return;
-
-  for (const node of scope.querySelectorAll<HTMLElement>(".fade-in")) {
-    node.classList.add("is-visible");
-  }
-}
-
-function initFadeIn(scope?: ParentNode, skipGated = false): void {
-  const nodes = scope
-    ? scope.querySelectorAll<HTMLElement>(".fade-in")
-    : document.querySelectorAll<HTMLElement>(".fade-in");
-
+function initFadeIn(): void {
+  const nodes = document.querySelectorAll<HTMLElement>(".fade-in");
   if (!nodes.length) return;
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -60,11 +38,7 @@ function initFadeIn(scope?: ParentNode, skipGated = false): void {
     { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
   );
 
-  for (const node of nodes) {
-    if (skipGated && isGatedHidden(node)) continue;
-    if (node.classList.contains("is-visible")) continue;
-    observer.observe(node);
-  }
+  for (const node of nodes) observer.observe(node);
 }
 
 function initFaqA11y(): void {
@@ -79,36 +53,7 @@ function initFaqA11y(): void {
   }
 }
 
-function onContentRevealed(): void {
-  const gated = document.getElementById("lp-gated");
-  const heroPitch = document.getElementById("hero-pitch-gated");
-  const heroTrust = document.getElementById("hero-trust-gated");
-  const heroCta = document.getElementById("hero-cta-gated");
-
-  markFadeInsVisible(gated ?? undefined);
-  markFadeInsVisible(heroPitch ?? undefined);
-  markFadeInsVisible(heroTrust ?? undefined);
-  markFadeInsVisible(heroCta ?? undefined);
-
-  initFadeIn(gated ?? undefined);
-  initFadeIn(heroPitch ?? undefined);
-  initFadeIn(heroTrust ?? undefined);
-  initFadeIn(heroCta ?? undefined);
-}
-
 bindCheckoutLinks();
 initHeroBackground();
-
-// Versao aberta (aberta/index.html): tudo visivel no load, sem esperar o video.
-if (document.body.dataset.reveal === "open") {
-  revealPageContent(onContentRevealed, false);
-}
-
-initVslReveal(onContentRevealed);
-initFadeIn(document.querySelector(".hero") ?? undefined, true);
+initFadeIn();
 initFaqA11y();
-
-// Ensure gated fade-ins appear if session already unlocked before observer ran.
-if (document.body.classList.contains("is-content-revealed")) {
-  onContentRevealed();
-}

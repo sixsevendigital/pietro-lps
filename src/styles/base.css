@@ -87,15 +87,20 @@ th,
 .section__lead,
 .hero__intro,
 .hero__trust,
-.about__bio,
 .about__role,
-.faq__item p,
 .offer__includes li,
 .final-cta__ps,
 .final-cta__trust,
 .site-footer__copy,
 .site-footer__legal {
   text-wrap: balance;
+}
+
+.about__bio,
+.faq__item p,
+.hero__sub,
+.final-cta__text {
+  text-wrap: pretty;
 }
 
 h1,
@@ -319,15 +324,6 @@ p {
 }
 
 .fade-in.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-body.is-content-revealed #lp-gated .fade-in,
-body.is-content-revealed .is-mobile-gated .fade-in,
-body.is-content-revealed .is-mobile-gated.fade-in,
-body.is-content-revealed .is-gated .fade-in,
-body.is-content-revealed .is-gated.fade-in {
   opacity: 1;
   transform: none;
 }
