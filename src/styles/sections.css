@@ -14,11 +14,11 @@
 
 @media (max-width: 640px) {
   .logo {
-    margin-bottom: var(--stack-normal);
+    margin-bottom: var(--space-2);
   }
 
   .logo__img {
-    width: min(100%, 10.5rem);
+    width: min(100%, 6.5rem);
   }
 }
 
@@ -77,7 +77,13 @@
 }
 
 .hero__pitch {
-  display: contents;
+  display: block;
+  width: min(100%, var(--max-w-wide));
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: #2a2233;
+  border: 1px solid color-mix(in srgb, var(--color-ouro) 35%, transparent);
 }
 
 .hero__title {
@@ -108,6 +114,8 @@
 .hero__intro {
   max-width: 34rem;
   margin: 0 auto var(--space-3);
+  color: #f5c542;
+  font-weight: 600;
   color: var(--text-on-dark-muted);
   font-size: 0.98rem;
   line-height: 1.55;
@@ -149,7 +157,7 @@
   height: 1.35rem;
 }
 
-.hero__benefits li:not(:nth-child(3n))::after {
+.hero__benefits li.__none::after {
   content: "";
   position: absolute;
   top: var(--space-2);
@@ -201,7 +209,7 @@
 
 @media (max-width: 640px) {
   .hero {
-    padding: 12px 0 var(--space-10);
+    padding: 8px 0 var(--space-10);
   }
 
   .hero__bg-spotlight {
@@ -234,30 +242,18 @@
   }
 
   .hero__title {
-    order: 1;
-    margin-bottom: var(--space-3);
-    font-size: var(--fs-h1);
-    line-height: 1.2;
+    margin-bottom: var(--space-2);
+    font-size: 1.02rem;
+    line-height: 1.22;
+    text-wrap: pretty;
     color: var(--color-papel);
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
   }
 
   .hero__sub {
-    order: 2;
-    font-size: var(--fs-lead);
-    margin-bottom: 0;
-  }
-
-  .hero__offer {
-    order: 3;
-  }
-
-  .hero__trust {
-    order: 4;
-  }
-
-  .hero__pitch {
-    order: 5;
+    font-size: 0.8125rem;
+    line-height: 1.42;
+    margin-bottom: var(--space-3);
   }
 
   .hero__title-accent {
@@ -266,31 +262,27 @@
   }
 
   .hero__offer {
-    margin-top: var(--stack-normal);
-    margin-bottom: var(--stack-normal);
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-2);
   }
 
   .hero__pitch {
     display: block;
-    margin-top: var(--stack-loose);
-    margin-bottom: 0;
+    margin: 0 calc(-1 * var(--space-2));
     padding: var(--space-3);
     border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--color-tinta) 72%, transparent);
-    border: 1px solid color-mix(in srgb, #fff 8%, transparent);
-    --hero-benefit-icon-col: 1.5rem;
-    --hero-benefit-gap: var(--space-3);
+    --hero-benefit-icon-col: 1rem;
+    --hero-benefit-gap: var(--space-2);
   }
 
   .hero__intro {
     display: block;
-    margin: 0 0 var(--space-3);
-    padding-left: calc(var(--hero-benefit-icon-col) + var(--hero-benefit-gap));
+    margin: 0 0 var(--space-2);
+    color: #f5c542;
     font-size: 12.5px;
-    font-weight: 600;
-    color: var(--color-papel);
+    font-weight: 700;
     text-align: left;
-    line-height: 1.45;
+    line-height: 1.35;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
   }
 
@@ -311,16 +303,16 @@
     grid-template-columns: var(--hero-benefit-icon-col) minmax(0, 1fr);
     align-items: center;
     column-gap: var(--hero-benefit-gap);
-    padding: var(--space-4) 0;
+    padding: 4px 0;
     border: 0;
     border-radius: 0;
     background: transparent;
     color: color-mix(in srgb, var(--color-papel) 96%, white);
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.35;
     text-align: left;
-    border-bottom: 1px solid color-mix(in srgb, #fff 14%, transparent);
+    text-wrap: pretty;
   }
 
   .hero__benefit-icon {
@@ -333,8 +325,8 @@
   }
 
   .hero__benefit-icon svg {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 0.95rem;
+    height: 0.95rem;
     stroke-width: 2;
   }
 
@@ -348,7 +340,9 @@
 
   .hero__cta {
     width: 100%;
-    margin-top: var(--space-4);
+    min-height: 2.75rem;
+    padding-block: 0.6rem;
+    margin-top: 0;
     font-size: 0.68rem;
     line-height: 1.35;
     padding-inline: var(--space-3);
@@ -915,9 +909,11 @@
 
 .offer__stack-price {
   flex-shrink: 0;
-  color: var(--text-on-dark);
+  color: #ff6b6b;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
 }
 
 .offer__guarantee-box {
@@ -997,14 +993,17 @@
 }
 
 .offer__from {
-  color: var(--text-on-light-subtle);
+  color: #d32f2f;
   text-decoration: line-through;
-  font-size: 0.9rem;
-  margin-bottom: var(--space-1);
+  text-decoration-thickness: 2px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
 }
 
 .offer__installments {
-  color: var(--text-on-light-muted);
+  color: #1c8a3f;
+  font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -1012,16 +1011,17 @@
 
 .offer__price {
   font-family: var(--font-display);
-  font-size: clamp(2.35rem, 5.5vw, 3.25rem);
-  color: var(--text-on-light);
+  font-size: clamp(3rem, 7vw, 4rem);
+  color: #1c8a3f;
   line-height: 1;
   margin: var(--space-1) 0;
 }
 
 .offer__cash {
   margin-bottom: var(--stack-loose);
-  color: var(--text-on-light-muted);
-  font-size: 0.9rem;
+  color: #1c8a3f;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .offer__card .btn {
@@ -1307,4 +1307,29 @@
   .hero__offer {
     margin-top: var(--space-4);
   }
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Celulares pequenos: mantém tudo até o botão na primeira dobra */
+@media (max-width: 380px) {
+  .hero__title {
+    font-size: 0.97rem;
+  }
+
+  .hero__sub {
+    font-size: 0.78rem;
+  }
+
+  .hero__benefits li {
+    padding: 3px 0;
+    font-size: 11.5px;
+  }
+}
+
+.hero .hero__intro {
+  color: #f5c542;
+  font-weight: 700;
 }
