@@ -191,7 +191,9 @@ p {
 }
 
 .section__title {
-  font-size: clamp(1.75rem, 3.8vw, 2.65rem);
+  text-align: center;
+  text-wrap: balance;
+  font-size: var(--fs-h2);
   margin-bottom: 0;
   line-height: 1.18;
 }

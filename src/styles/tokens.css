@@ -74,6 +74,14 @@
   --radius-lg: 1.25rem;
   --radius-pill: 999px;
 
+  /* ——— Type scale ——— */
+  --fs-h1: clamp(1.45rem, 1rem + 1.9vw, 2.4rem);
+  --fs-h2: clamp(1.75rem, 1.2rem + 2vw, 2.6rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --fs-lead: clamp(0.975rem, 0.92rem + 0.25vw, 1.125rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
   --font-display: "Gloock", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
