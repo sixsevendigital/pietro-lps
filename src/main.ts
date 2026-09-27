@@ -82,7 +82,7 @@ window.addEventListener("resize", onScroll);
 onScroll();
 
 /* Carrosséis: pontinhos com progresso + rotação automática */
-const AUTO_MS = 4200;
+const AUTO_MS = 2600;
 for (const car of $$<HTMLElement>("[data-carousel]")) {
   const track = $<HTMLElement>(".carousel__track", car)!;
   const slides = $$<HTMLElement>(".slide", track);
@@ -234,7 +234,7 @@ if (!reduced) {
     t.classList.remove("reveal");
     revealIO.observe(t);
   }
-  const groups = [".journey ol", ".exp__list", ".bonus-list", ".faq", ".stats", ".offer__stack"];
+  const groups = [".journey ol", ".exp__list", ".bonus-list", ".faq", ".stats", ".offer__stack", ".product__list"];
   for (const sel of groups) {
     for (const g of $$<HTMLElement>(sel)) {
       if (sel === ".offer__stack") continue;
