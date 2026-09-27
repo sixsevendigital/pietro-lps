@@ -176,8 +176,46 @@
 }
 
 .hero__spacer {
+  position: relative;
   flex: 1 1 auto;
+  width: 100%;
   min-height: 2.5rem;
+}
+
+/* Foto da praia: só no celular, fundida ao fundo */
+.hero__visual {
+  position: absolute;
+  inset: -2.5rem calc(-1 * var(--container-gutter)) -1.5rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
+  opacity: 0.92;
+  -webkit-mask-image: radial-gradient(closest-side, #000 50%, rgba(0, 0, 0, 0.55) 75%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 50%, rgba(0, 0, 0, 0.55) 75%, transparent 100%);
+  animation: praia-in 1.6s ease-out both;
+}
+
+@keyframes praia-in {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero__visual {
+    display: none;
+  }
 }
 
 .hero__title {
@@ -1720,4 +1758,36 @@
   .section::before {
     animation: none !important;
   }
+}
+
+/* Aviso do interruptor */
+.fit__hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+  color: var(--text-on-light-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: opacity 0.4s ease;
+}
+
+.fit__hand {
+  display: inline-block;
+  animation: tap 1.4s ease-in-out infinite;
+}
+
+@keyframes tap {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+[data-fit].is-manual .fit__hint {
+  opacity: 0;
 }

@@ -120,10 +120,10 @@ for (const car of $$<HTMLElement>("[data-carousel]")) {
         b.classList.add("is-active");
       }
     });
-    car.classList.toggle("is-auto", inView && !reduced && Date.now() > pausedUntil && scrollable());
+    car.classList.toggle("is-auto", inView && Date.now() > pausedUntil && scrollable());
   };
   const tick = () => {
-    if (inView && !reduced && Date.now() > pausedUntil && scrollable()) go(idx + 1);
+    if (inView && Date.now() > pausedUntil && scrollable()) go(idx + 1);
   };
   const start = () => {
     clearInterval(timer);
@@ -159,14 +159,23 @@ for (const car of $$<HTMLElement>("[data-carousel]")) {
     },
     { passive: true },
   );
-  for (const ev of ["pointerdown", "touchstart", "wheel"]) track.addEventListener(ev, pause, { passive: true });
+  track.addEventListener("pointerdown", (e) => {
+    if ((e as PointerEvent).pointerType !== "mouse") pause();
+  });
+  track.addEventListener(
+    "wheel",
+    (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) pause();
+    },
+    { passive: true },
+  );
   new IntersectionObserver(
     (es) => {
       inView = es[0].isIntersecting;
       if (inView) start();
       paint();
     },
-    { threshold: 0.45 },
+    { threshold: 0.3 },
   ).observe(car);
   paint();
 }
@@ -191,11 +200,11 @@ for (const tabs of $$<HTMLElement>("[data-tabs]")) {
     });
     const b = btns[i];
     list.scrollTo({ left: b.offsetLeft - (list.clientWidth - b.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
-    tabs.classList.toggle("is-auto", !manual && inView && !reduced);
+    tabs.classList.toggle("is-auto", !manual && inView);
     const bar = btns[i];
     bar.classList.remove("is-timing");
     void bar.offsetWidth;
-    if (!manual && !reduced) bar.classList.add("is-timing");
+    if (!manual) bar.classList.add("is-timing");
   };
   btns.forEach((b, i) =>
     b.addEventListener("click", () => {
@@ -212,7 +221,7 @@ for (const tabs of $$<HTMLElement>("[data-tabs]")) {
     { threshold: 0.4 },
   ).observe(tabs);
   window.setInterval(() => {
-    if (!manual && inView && !reduced) show((cur + 1) % btns.length);
+    if (!manual && inView) show((cur + 1) % btns.length);
   }, 3800);
 }
 
@@ -249,33 +258,50 @@ if (!reduced) {
   }
 }
 
-/* Interruptor pra quem é / não é */
+/* Interruptor pra quem é / não é (alterna sozinho até a pessoa tocar) */
 for (const fit of $$<HTMLElement>("[data-fit]")) {
   const btns = $$<HTMLButtonElement>("[data-fit-btn]", fit);
   const panels = $$<HTMLElement>("[data-fit-panel]", fit);
+  let manual = false;
+  let inView = false;
+  let cur = "yes";
+  const set = (v: string) => {
+    cur = v;
+    fit.classList.toggle("is-no", v === "no");
+    btns.forEach((x) => {
+      const on = x.dataset.fitBtn === v;
+      x.classList.toggle("is-active", on);
+      x.setAttribute("aria-selected", String(on));
+    });
+    panels.forEach((p) => {
+      const on = p.dataset.fitPanel === v;
+      p.hidden = !on;
+      p.classList.toggle("is-active", on);
+      if (on) {
+        for (const li of $$<HTMLElement>("li", p)) {
+          li.style.animation = "none";
+          void li.offsetWidth;
+          li.style.animation = "";
+        }
+      }
+    });
+  };
   btns.forEach((b) =>
     b.addEventListener("click", () => {
-      const v = b.dataset.fitBtn;
-      fit.classList.toggle("is-no", v === "no");
-      btns.forEach((x) => {
-        x.classList.toggle("is-active", x === b);
-        x.setAttribute("aria-selected", String(x === b));
-      });
-      panels.forEach((p) => {
-        const on = p.dataset.fitPanel === v;
-        p.hidden = !on;
-        p.classList.toggle("is-active", on);
-        if (on) {
-          // reinicia a animação dos itens
-          for (const li of $$<HTMLElement>("li", p)) {
-            li.style.animation = "none";
-            void li.offsetWidth;
-            li.style.animation = "";
-          }
-        }
-      });
+      manual = true;
+      fit.classList.add("is-manual");
+      set(b.dataset.fitBtn || "yes");
     }),
   );
+  new IntersectionObserver(
+    (es) => {
+      inView = es[0].isIntersecting;
+    },
+    { threshold: 0.3 },
+  ).observe(fit);
+  window.setInterval(() => {
+    if (!manual && inView) set(cur === "yes" ? "no" : "yes");
+  }, 3800);
 }
 
 /* Acordeões exclusivos (bônus e FAQ) */
