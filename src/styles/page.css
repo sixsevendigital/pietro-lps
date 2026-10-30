@@ -1791,3 +1791,28 @@
 [data-fit].is-manual .fit__hint {
   opacity: 0;
 }
+
+/* Narrativa: títulos das etapas e etiquetas dos produtos */
+.journey__t {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: #f5d08c;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.product__tag {
+  display: inline-block;
+  margin: calc(-1 * var(--space-1)) 0 var(--space-4);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-ouro) 18%, transparent);
+  border: 1px solid var(--stroke-accent);
+  color: #f5d08c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
