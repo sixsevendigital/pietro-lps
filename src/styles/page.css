@@ -207,7 +207,7 @@
     transform: scale(1.06);
   }
   to {
-    opacity: 0.92;
+    opacity: 1;
     transform: scale(1);
   }
 }
@@ -1815,4 +1815,19 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* Fotos de dinheiro e conquista */
+.hero__visual img {
+  object-position: 50% 50%;
+  opacity: 1;
+}
+
+.about-com__media {
+  max-width: 46rem;
+  margin: 0 auto var(--space-8);
+}
+
+.closing__media img {
+  opacity: 0.42;
 }
